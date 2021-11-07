@@ -69,6 +69,12 @@ class Sudoku:
         for i in range(9):
             for j in range(9):
                 self.integer_list[i][j].set(0)
+        self.possible_numbers.clear()
+        for j in range(9):
+            a = []
+            for t in range(9):
+                a.append({i for i in range(1, 10)})
+            self.possible_numbers.append(a)
 
     def check(self):
         var = 0
@@ -115,7 +121,6 @@ class Sudoku:
                 if len(self.possible_numbers[i][j]) == 1:
                     if self.integer_list[i][j].get() == 0:
                         var = self.possible_numbers[i][j].pop()
-                        # print(i, j, var)
                         self.integer_list[i][j].set(var)
 
     def column_check(self):
@@ -143,7 +148,6 @@ class Sudoku:
                                 if f == 0:
                                     if self.box_not(w, i, p):
                                         self.integer_list[w][i].set(p)
-                                        # print(w, i, p, sep=',')
                     p += 1
 
     def row_check(self):
@@ -171,7 +175,6 @@ class Sudoku:
                                 if f == 0:
                                     if self.box_not(i, w, p):
                                         self.integer_list[i][w].set(p)
-                                        # print(i, w, p, sep=',')
                     p += 1
 
     def box_not(self, a, b, val):
@@ -208,9 +211,8 @@ class Sudoku:
 
     def solve_sudoku(self):
         n = 0
-        while n < 1000:
+        while n < 100:
             if self.check():
-                # print(n)
                 return
             self.solve()
             n += 1
@@ -218,10 +220,9 @@ class Sudoku:
             tkinter.messagebox.showinfo("Error", message="Invalid Number of Inputs")
 
 
-
 if __name__ == '__main__':
     main_window = tkinter.Tk()
-    main_window.geometry('735x600')
+    main_window.geometry('735x650')
     S = Sudoku()
 
     main_window.title("Sudoku Solver")
